@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Hi Rosie.</title>
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+
+	    html, body {
+		    margin: 0;
+		    padding: 0;
+		    height: 100%;
+		    width: 100%;
+	    }
+
+	    text,span {
+
+        font-family: 'Cutive Mono', monospace;
+		    font-size: 12px;
+        stroke:'white';
+	    }
+      path.line {
+		    fill: none;
+		    stroke: 'green';
+		    stroke-width: 3px;
+	    }
+
+
+
+
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: slategray;
+		  shape-rendering: crispEdges;
+		}
+    </style>
+  </head>
+  <body style='background-color:#222'>
+    <div>
+    <span style="color:#FE4A49">  Download (Mbit/s) </span>|
+    <span style="color:#009FB7">  Upload (Mbit/s) </span>|
+  <span style="color:#FED766">  Ping (ms) </span>
+</div>
+
+	<script type="text/javascript">
+var parseDate = d3.timeParse("%d/%m/%Y %H:%M");
+
+var margin = { left: 50, right: 40, top: 40, bottom: 100 };
+
+var width = window.innerWidth - margin.left - margin.right;
+var height = window.innerHeight - margin.top - margin.bottom;
+
+var max = 0;
+
+var xNudge = 50;
+var yNudge = margin.top;
+
+var minDate = new Date();
+var maxDate = new Date();
+
+d3
+  .csv("speedtest.csv")
+  .row(function(d) {
+    return {
+      month: parseDate(d.Date + " " + d.Time),
+      download: Number(d.Download),
+      upload: Number(d.Upload),
+      ping: Number(d.Ping)
+    };
+  })
+  .get(function(error, rows) {
+    max = d3.max(rows, function(d) {
+      return d.download;
+    });
+    maxup = d3.max(rows, function(d) {
+      return d.upload;
+    });
+    maxping = d3.max(rows, function(d) {
+      return d.ping;
+    });
+    minDate = d3.min(rows, function(d) {
+      return d.month;
+    });
+    maxDate = d3.max(rows, function(d) {
+      return d.month;
+    });
+
+    var y = d3
+      .scaleLinear()
+      .domain([0, max])
+      .range([height, 0]);
+
+      var up = d3
+        .scaleLinear()
+        .domain([0, maxup])
+        .range([height, 0]);
+
+        var ping = d3
+          .scaleLinear()
+          .domain([0, maxping])
+          .range([height, 0]);
+
+
+    var x = d3
+      .scaleTime()
+      .domain([minDate, maxDate])
+      .range([0, width]);
+
+    var yAxis = d3.axisLeft(y);
+    var yrAxis = d3.axisRight(y);
+    var pAxis = d3.axisLeft(ping);
+
+    var xAxis = d3.axisBottom(x);
+
+
+    var svg = d3
+      .select("body")
+      .append("svg")
+      //.style('background-color','#222')
+      .attr("id", "svg")
+      .attr("height", "100%")
+      .attr("width", "100%");
+
+
+    var chartGroup = svg
+      .append("g")
+      .attr("class", "chartGroup")
+      .attr("transform", "translate(" + xNudge + "," + yNudge + ")");
+
+      chartGroup
+        .append("g")
+        .attr("class", "axis x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .attr('stroke','white')
+
+
+//download
+
+      var line = d3
+        .line()
+        .x(function(d) {
+          return x(d.month);
+        })
+        .y(function(d) {
+          return y(d.download);
+        })
+        .curve(d3.curveCardinal);
+
+
+
+    chartGroup
+      .append("path")
+      .attr("class", "line")
+      .attr("d", function(d) {
+        return line(rows);
+      })
+      .attr('stroke','#FE4A49')
+
+    chartGroup
+            .append("g")
+            .attr("class", "axis y")
+            .call(yAxis)
+            .attr('stroke','white')
+
+
+//Upload
+
+
+
+      var line = d3
+        .line()
+        .x(function(d) {
+          return x(d.month);
+        })
+        .y(function(d) {
+          return y(d.upload);
+        })
+        .curve(d3.curveCardinal);
+
+    chartGroup
+      .append("path")
+      .attr("class", "line")
+      .attr("d", function(d) {
+        return line(rows);
+      })
+      .attr('stroke','#009FB7')
+
+
+                  chartGroup
+                          .append("g")
+                          .attr("class", "axis y")
+                          .call(yrAxis)
+                          .attr('transform',`translate(${width},0)`)
+                          .attr('stroke','white')
+
+
+
+
+            var line = d3
+              .line()
+              .x(function(d) {
+                return x(d.month);
+              })
+              .y(function(d) {
+                return ping(d.ping);
+              })
+              .curve(d3.curveCardinal);
+
+          chartGroup
+            .append("path")
+            .attr("class", "line")
+            .attr("d", function(d) {
+              return line(rows);
+            })
+            .attr('stroke','#FED766')
+
+
+            chartGroup
+                    .append("g")
+                    .attr("class", "axis y")
+                    .call(pAxis)
+                    .attr('transform',`translate(${width},0)`)
+                    .attr('stroke','#FED766')
+
+
+
+
+
+    });
+</script>
+  </body>
+</html>
