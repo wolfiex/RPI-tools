@@ -1,2 +1,8 @@
 # RPI-tools
-Raspberry Pi tools for useful automated tasks
+Raspberry Pi tools for useful automated tasks!
+
+
+Contains:
+* Automated Broadband Speedcheck Logger
+* York Sport automated class booking
+* Google Calandar alarm Clock
