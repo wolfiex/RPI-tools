@@ -1,3 +1,6 @@
+# Step 0 
+Copy startserver and index.html files into your home directory.
+
 # Step 1
 Install the requirements:
 ```
