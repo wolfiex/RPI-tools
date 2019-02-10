@@ -29,5 +29,5 @@ Move / update the rc.local file in /etc. to configure autostart. Note code must 
 Reboot, find your rpi ip address and view the graph using port 8000.
 http://\<your ip\>:8000
 
-<image src='*.png'>
+<image src='Screen Shot 2019-02-10 at 02.37.01.png'>
 
