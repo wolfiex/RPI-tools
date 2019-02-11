@@ -21,4 +21,4 @@ except Exception as e:
     print e
     pass
 
-f.write('{},{},{},{},{},{}\r\n'.format(int(time.time()),time.strftime('%m/%d/%y'), time.strftime('%H:%M'), ping, download, upload))
+f.write('{},{},{},{},{},{}\r\n'.format(int(time.time()),time.strftime('%d/%m/%y'), time.strftime('%H:%M'), ping, download, upload))
