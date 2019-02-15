@@ -1,3 +1,12 @@
+# Install
+```
+pip install selenium
+pip install pyvirtualdisplay
+sudo apt-get install xvfb
+
+```
+
+
 # target.py
 Auto setup the cronjob to run shoot.py 5 minutes before bid end. 
 
