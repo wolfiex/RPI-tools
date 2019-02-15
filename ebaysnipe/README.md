@@ -3,6 +3,7 @@
 pip install selenium
 pip install pyvirtualdisplay
 sudo apt-get install xvfb
+sudo apt-get install chromium-bsu
 
 ```
 
