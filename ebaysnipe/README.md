@@ -1,9 +1,14 @@
 # Install
 ```
-pip install selenium
-pip install pyvirtualdisplay
-sudo apt-get install xvfb
-sudo apt-get install chromium-bsu
+sudo pip install selenium
+sudo pip install PyVirtualDisplay
+sudo pip install xvfbwrapper
+
+sudo apt-get update
+sudo apt-get install iceweasel
+sudo apt-get install xvfb --yes
+sudo apt-get install chromium-browser --yes
+
 
 ```
 
