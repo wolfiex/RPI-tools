@@ -1,5 +1,5 @@
 #brew install chromedriver
-
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
@@ -15,10 +15,16 @@ pw = [i.strip() for i in tuple(open('pass.word'))]
 itemidurl = sys.argv[0]
 maxbidebay = sys.argv[1]
 if maxbidebay>70: sys.exit()
-
+'''
 options = webdriver.ChromeOptions()
 options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 driver = webdriver.Chrome(executable_path=os.popen('which chromedriver').read().strip(),options=options)
+'''
+
+display = Display(visible=0, size=(1024, 768))
+display.start()
+
+driver = webdriver.Firefox()
 
 driver.get(itemidurl)
 time.sleep(3)
