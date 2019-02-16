@@ -1,3 +1,15 @@
+# location of autostart file - note only one server can run at a time. 
+`sudo nano /etc/rc.local`
+Code must be entered before exit.
+```
+#mycode here
+#su pi -c 'cd /home/pi && node /home/pi/startserver.js  < /dev/null &'
+```
+
+Note if this is running no other webservers will be able to!
+
+
+
 # Step 0 
 Copy `startserver.py` and `index.html` files into your home directory.
 
